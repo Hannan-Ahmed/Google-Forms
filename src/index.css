@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  .placeholder-text-lg::placeholder {
+    @apply text-2xl ;
+  }
+}
