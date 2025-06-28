@@ -74,14 +74,23 @@ pipeline {
     }
 
     stage('Deploy via Ansible') {
-  steps {
-    sh '''
-      cd ansible
-      ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml
-    '''
-  }
-}
+      steps {
+        script {
+          def deployEnv = 'develop'
+          if (env.BRANCH_NAME == 'master') {
+            deployEnv = 'production'
+          } else if (env.BRANCH_NAME == 'staging') {
+            deployEnv = 'staging'
+          }
+          echo "🌍 Branch: ${env.BRANCH_NAME} → Deploying to: ${deployEnv}"
 
+          sh """
+            cd ansible
+            ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml -e env=${deployEnv}
+          """
+        }
+      }
+    }
   }
 
   post {

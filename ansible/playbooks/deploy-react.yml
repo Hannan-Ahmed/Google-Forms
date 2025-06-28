@@ -1,6 +1,9 @@
----
-- name: Deploy React App
-  hosts: react_servers
+- name: Deploy React App to {{ env }}
+  hosts: "{{ env }}"
   become: yes
+
+  vars_files:
+    - "../roles/docker_deploy/vars/{{ env }}.yml"
+
   roles:
     - docker_deploy
