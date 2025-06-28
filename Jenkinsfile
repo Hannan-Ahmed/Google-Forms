@@ -73,12 +73,21 @@ pipeline {
       }
     }
 
-    stage('Deploy to Remote Host') {
+    stage('Deploy via Ansible') {
       steps {
         script {
-          sh 'docker stop harmony-playground || true'
-          sh 'docker rm harmony-playground || true'
-          sh 'docker run -d --name harmony-playground -p 3000:80 ${DOCKER_IMAGE}:${DOCKER_TAG}'
+          def deployEnv = 'develop'
+          if (env.BRANCH_NAME == 'master') {
+            deployEnv = 'production'
+          } else if (env.BRANCH_NAME == 'staging') {
+            deployEnv = 'staging'
+          }
+          echo "🌍 Branch: ${env.BRANCH_NAME} → Deploying to: ${deployEnv}"
+
+          sh """
+            cd ansible
+            ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml -e env=${deployEnv}
+          """
         }
       }
     }
