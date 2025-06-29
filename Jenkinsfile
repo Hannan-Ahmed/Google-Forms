@@ -14,18 +14,22 @@ pipeline {
   stages {
     stage('Git Checkout') {
   steps {
-    deleteDir() // Clean workspace to avoid mixing files
+    deleteDir() // ✅ Wipe the workspace completely (clean start)
     checkout([$class: 'GitSCM',
       branches: [[name: "*/${env.BRANCH_NAME}"]],
+      doGenerateSubmoduleConfigurations: false,
+      extensions: [],
+      submoduleCfg: [],
       userRemoteConfigs: [[
         url: 'https://github.com/Hannan-Ahmed/Google-Forms.git',
         credentialsId: 'minsa-tokens'
       ]]
     ])
-    sh 'echo 🟢 Checked out branch: ${BRANCH_NAME}'
+    sh 'echo ✅ Checked out branch: ${BRANCH_NAME}'
     sh 'git log -1 --oneline'
   }
 }
+
 
 
     stage('OWASP Dependency-Check Vulnerabilities') {

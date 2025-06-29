@@ -4,25 +4,11 @@ import { FormProvider } from './context/form-context';
 import Responses from './components/Responses';
 import DisplayForm from './components/DisplayForm';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import SinglePageApp from './components/Hotel';
 
 const App = () => {
   return (
-    <div style={styles.appContainer}>
-      <FormProvider>
-        <div style={styles.header}>
-          <h1 style={styles.title}>Red Themed Form App</h1>
-        </div>
-
-        <div style={styles.card}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<TextField />} />
-              <Route path="form" element={<DisplayForm />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </FormProvider>
-    </div>
+   <SinglePageApp/>
   );
 };
 
