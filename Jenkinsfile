@@ -13,11 +13,20 @@ pipeline {
 
   stages {
     stage('Git Checkout') {
-      steps {
-        git changelog: true, credentialsId: 'minsa-tokens', poll: false, url: 'https://github.com/Hannan-Ahmed/Google-Forms.git'
-        sh 'git log -1 --oneline'
-      }
-    }
+  steps {
+    deleteDir() // Clean workspace to avoid mixing files
+    checkout([$class: 'GitSCM',
+      branches: [[name: "*/${env.BRANCH_NAME}"]],
+      userRemoteConfigs: [[
+        url: 'https://github.com/Hannan-Ahmed/Google-Forms.git',
+        credentialsId: 'minsa-tokens'
+      ]]
+    ])
+    sh 'echo 🟢 Checked out branch: ${BRANCH_NAME}'
+    sh 'git log -1 --oneline'
+  }
+}
+
 
     stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
