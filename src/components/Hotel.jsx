@@ -6,19 +6,19 @@ export default function FitnessLandingPage() {
     {
       image:
         "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      heading: "Transform Your Body",
+      heading: "Float like a butterfly, sting like a bee.",
       subheading: "Elevate Your Life"
     },
     {
       image:
         "https://images.pexels.com/photos/4662438/pexels-photo-4662438.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      heading: "Unleash Your Potential",
+      heading: "It’s hard to be humble when you’re as great as I am.",
       subheading: "Train Like Never Before"
     },
     {
       image:
         "https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      heading: "Strong Body, Calm Mind",
+      heading: "Impossible is just a big word thrown around by small men who find it easier to live in the world they’ve been given than to explore the power they have to change it.",
       subheading: "Balance Through Movement"
     }
   ];
