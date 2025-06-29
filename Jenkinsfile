@@ -12,12 +12,16 @@ pipeline {
   }
 
   stages {
-    stage('Git Checkout') {
-      steps {
-        git changelog: true, credentialsId: 'minsa-tokens', poll: false, url: 'https://github.com/Hannan-Ahmed/Google-Forms.git'
-        sh 'git log -1 --oneline'
-      }
-    }
+
+    // ❌ REMOVE this stage entirely
+    // stage('Git Checkout') {
+    //   steps {
+    //     deleteDir()
+    //     checkout([ ... ])
+    //     sh 'echo ✅ Checked out branch: ${BRANCH_NAME}'
+    //     sh 'git log -1 --oneline'
+    //   }
+    // }
 
     stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
@@ -86,7 +90,7 @@ pipeline {
 
           sh """
             cd ansible
-            ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml -e env=${deployEnv}
+            ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml -e env=${deployEnv} --private-key=/var/lib/jenkins/.ssh/id_rsa
           """
         }
       }
