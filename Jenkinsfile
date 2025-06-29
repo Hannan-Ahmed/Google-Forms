@@ -86,7 +86,7 @@ pipeline {
 
           sh """
             cd ansible
-            ansible-playbook playbooks/deploy-react.yml -e env=${deployEnv}
+            ansible-playbook -i inventory/hosts.ini playbooks/deploy-react.yml -e env=${deployEnv} --private-key=/var/lib/jenkins/.ssh/id_rsa
           """
         }
       }
