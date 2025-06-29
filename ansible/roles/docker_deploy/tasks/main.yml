@@ -1,0 +1,27 @@
+---
+- name: Ensure Docker is installed
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Pull Docker image
+  community.docker.docker_image:
+    name: "{{ docker_image }}"
+    tag: "{{ docker_tag }}"
+    source: pull
+
+- name: Stop old container
+  community.docker.docker_container:
+    name: harmony-playground
+    state: absent
+    force_kill: true
+
+- name: Run new container
+  community.docker.docker_container:
+    name: harmony-playground
+    image: "{{ docker_image }}:{{ docker_tag }}"
+    ports:
+      - "3000:80"
+    restart_policy: always
+    state: started
